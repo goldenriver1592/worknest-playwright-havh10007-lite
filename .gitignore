@@ -1,0 +1,9 @@
+
+# Playwright
+.auth/
+reports/allure-results/
+reports/allure-report/
+reports/playwright-html/
+test-results/
+node_modules/
+*.local
