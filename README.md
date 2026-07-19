@@ -244,11 +244,7 @@ npx playwright test
 
 ## Allure Dashboard Screenshot
 
-TBD — thêm ảnh Allure dashboard vào repository và nhúng tại đây:
-
-```markdown
-![Allure Report Dashboard](docs/images/allure-dashboard.png)
-```
+https://goldenriver1592.github.io/worknest-playwright-havh10007-lite/
 
 ## CI/CD
 
@@ -261,11 +257,11 @@ GitHub Actions workflow tại `.github/workflows/ci.yml` thực hiện:
 5. Generate Allure report.
 6. Upload Playwright và Allure reports dưới dạng artifacts.
 
-Link workflow run gần nhất: TBD
+Link workflow run gần nhất: https://github.com/goldenriver1592/worknest-playwright-havh10007-lite/actions/runs/29671785732
 
 ## Video demo
 
-- Video demo 2–4 phút: TBD
+- Video demo 2–4 phút: https://youtu.be/nFgNEtg7pfU
 
 Nội dung video đề xuất:
 
@@ -297,5 +293,5 @@ Nội dung video đề xuất:
 | Allure categories | Hoàn thành |
 | CI workflow | Đã cấu hình, chờ xác minh trên GitHub |
 | Kết quả local gần nhất | 45 passed, 2 skipped, 0 failed |
-| Allure screenshot | TBD |
-| Video demo | TBD |
+| Allure screenshot | Hoàn thành |
+| Video demo | Hoàn thành |
