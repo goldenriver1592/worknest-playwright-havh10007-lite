@@ -14,6 +14,11 @@ on:
         required: false
         default: 'staging'
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   test:
     timeout-minutes: 60
@@ -63,6 +68,26 @@ jobs:
           path: reports/allure-report/
           retention-days: 30
 
+      - name: Configure GitHub Pages
+        if: >-
+          always() &&
+          github.event_name != 'pull_request' &&
+          (github.ref == 'refs/heads/main' ||
+          github.ref == 'refs/heads/master' ||
+          github.event_name == 'workflow_dispatch')
+        uses: actions/configure-pages@v5
+
+      - name: Upload Allure report for GitHub Pages
+        if: >-
+          always() &&
+          github.event_name != 'pull_request' &&
+          (github.ref == 'refs/heads/main' ||
+          github.ref == 'refs/heads/master' ||
+          github.event_name == 'workflow_dispatch')
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: reports/allure-report/
+
       - name: Add report link to summary
         if: always()
         run: |
@@ -71,3 +96,34 @@ jobs:
           echo "| Status | Details |" >> $GITHUB_STEP_SUMMARY
           echo "|--------|---------|" >> $GITHUB_STEP_SUMMARY
           echo "| ✅ Playwright & Allure reports | [Download artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) |" >> $GITHUB_STEP_SUMMARY
+
+  deploy-allure:
+    name: Deploy Allure Report
+    needs: test
+    if: >-
+      always() &&
+      needs.test.result != 'cancelled' &&
+      github.event_name != 'pull_request' &&
+      (github.ref == 'refs/heads/main' ||
+      github.ref == 'refs/heads/master' ||
+      github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: github-pages
+      cancel-in-progress: true
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy Allure report to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Add Allure report URL to summary
+        run: |
+          echo "## 📊 Allure Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "[Open Allure Report](${{ steps.deployment.outputs.page_url }})" >> $GITHUB_STEP_SUMMARY
