@@ -1,0 +1,36 @@
+{
+  "name": "playwright-cw-prj",
+  "version": "1.0.0",
+  "description": "Playwright E2E, API and visual regression test suite for WorkNest",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:e2e": "playwright test --project=admin-chromium --project=manager-chromium --project=employee-chromium",
+    "test:api": "playwright test --project=api-project",
+    "test:visual": "playwright test --project=visual-admin-chromium",
+    "test:update-snapshots": "playwright test --project=visual-admin-chromium --update-snapshots",
+    "report:allure": "node -e \"const fs=require('node:fs');fs.mkdirSync('reports/allure-results',{recursive:true});fs.copyFileSync('reports/categories.json','reports/allure-results/categories.json')\" && allure generate reports/allure-results --clean -o reports/allure-report",
+    "report:open": "allure open reports/allure-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goldenriver1592/worknest-playwright-havh10007-lite.git"
+  },
+  "keywords": [],
+  "author": "Võ Hoàng Hà",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/goldenriver1592/worknest-playwright-havh10007-lite/issues"
+  },
+  "homepage": "https://github.com/goldenriver1592/worknest-playwright-havh10007-lite#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.1",
+    "allure-commandline": "^2.43.0",
+    "allure-js-commons": "^3.10.2",
+    "allure-playwright": "^3.10.2",
+    "typescript": "^5.9.3"
+  }
+}
